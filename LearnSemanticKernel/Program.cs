@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using LearnSemanticKernel;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Plugins.Core;
@@ -29,6 +30,7 @@ var prompt = @"{{$input}}
 One line TLDR with the fewest words.";
 
 var summarize = kernel.CreateFunctionFromPrompt(prompt, executionSettings: new OpenAIPromptExecutionSettings { MaxTokens = 100 });
+var product = kernel.ImportPluginFromType<ProductPlugin>();
 
 string text1 = @"
 1st Law of Thermodynamics - Energy cannot be created or destroyed.
@@ -44,33 +46,4 @@ Console.WriteLine(await kernel.InvokeAsync(summarize, new KernelArguments(text1)
 
 Console.WriteLine(await kernel.InvokeAsync(summarize, new KernelArguments(text2)));
 
-// Output:
-//   Energy conserved, entropy increases, zero entropy at 0K.
-//   Objects move in response to forces.
-
-
-
-
-
-
-
-
-
-
-
-//var time = kernel.ImportPluginFromType<TimePlugin>();
-//var result = await kernel.RunAsync(time["Today"]);
-
-//Console.WriteLine(result);
-
-
-
-
-//var kernelWithConfiguration = Kernel.Builder
-//                                    .WithLoggerFactory(loggerFactory)
-//                                    .WithAzureChatCompletionService(
-//                                        AzureOpenAIDeploymentName,  // The name of your deployment (e.g., "gpt-35-turbo")
-//                                        AzureOpenAIEndpoint,        // The endpoint of your Azure OpenAI service
-//                                        AzureOpenAIApiKey           // The API key of your Azure OpenAI service
-//                                    )
-//                                    .Build();
+Console.WriteLine(await kernel.InvokeAsync(product["Today"]));
