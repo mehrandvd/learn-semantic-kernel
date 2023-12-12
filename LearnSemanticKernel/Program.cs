@@ -30,7 +30,10 @@ var prompt = @"{{$input}}
 One line TLDR with the fewest words.";
 
 var summarize = kernel.CreateFunctionFromPrompt(prompt, executionSettings: new OpenAIPromptExecutionSettings { MaxTokens = 100 });
-var product = kernel.ImportPluginFromType<ProductPlugin>();
+//var product = 
+    kernel.ImportPluginFromType<ProductPlugin>();
+
+var product = kernel.Plugins[nameof(ProductPlugin)];
 
 string text1 = @"
 1st Law of Thermodynamics - Energy cannot be created or destroyed.
@@ -43,6 +46,8 @@ string text2 = @"
 3. Whenever one object exerts a force on another object, the second object exerts an equal and opposite on the first.";
 
 Console.WriteLine(await kernel.InvokeAsync(summarize, new KernelArguments(text1)));
+
+Console.WriteLine(await summarize.InvokeAsync(kernel, new KernelArguments(text1)));
 
 Console.WriteLine(await kernel.InvokeAsync(summarize, new KernelArguments(text2)));
 

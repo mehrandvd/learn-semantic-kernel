@@ -16,4 +16,13 @@
     <PackageReference Include="Microsoft.SemanticKernel.Core" Version="1.0.0-rc3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Plugins\OrchestrationPlugin\GetIntent\config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Plugins\OrchestrationPlugin\GetIntent\skprompt.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
