@@ -14,10 +14,10 @@ namespace LearnSemanticKernel.Test
             var testDir = Environment.CurrentDirectory;
 
             var apiKey =
-                Environment.GetEnvironmentVariable("mlk-openai-test-api-key", EnvironmentVariableTarget.User) ??
+                Environment.GetEnvironmentVariable("openai-api-key", EnvironmentVariableTarget.User) ??
                 throw new Exception("No ApiKey in environment variables.");
             var endpoint =
-                Environment.GetEnvironmentVariable("mlk-openai-test-endpoint", EnvironmentVariableTarget.User) ??
+                Environment.GetEnvironmentVariable("openai-endpoint", EnvironmentVariableTarget.User) ??
                 throw new Exception("No Endpoint in environment variables.");
 
             var builder = Kernel.CreateBuilder();

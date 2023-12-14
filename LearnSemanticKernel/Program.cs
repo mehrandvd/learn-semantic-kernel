@@ -16,8 +16,8 @@ Console.WriteLine("Hello, World!");
 //           .AddConsole();
 //});
 
-//var apiKey = Environment.GetEnvironmentVariable("mlk-openai-test-api-key", EnvironmentVariableTarget.User) ?? throw new Exception("No ApiKey in environment variables.");
-//var endpoint = Environment.GetEnvironmentVariable("mlk-openai-test-endpoint", EnvironmentVariableTarget.User) ?? throw new Exception("No Endpoint in environment variables.");
+//var apiKey = Environment.GetEnvironmentVariable("openai-api-key", EnvironmentVariableTarget.User) ?? throw new Exception("No ApiKey in environment variables.");
+//var endpoint = Environment.GetEnvironmentVariable("openai-endpoint", EnvironmentVariableTarget.User) ?? throw new Exception("No Endpoint in environment variables.");
 
 //var kernel = new KernelBuilder()
 //             .AddAzureOpenAIChatCompletion("gpt-35-turbo-test", "gpt-35-turbo", endpoint, apiKey)
