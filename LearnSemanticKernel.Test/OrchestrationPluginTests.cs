@@ -6,31 +6,32 @@ namespace LearnSemanticKernel.Test
 {
     public class OrchestrationPluginTests
     {
-        private Kernel Kernel { get; set; }
-        private IKernelPlugin OrchestrationPlugin { get; set; }
+        private Kernel MyKernel { get; set; }
         private KernelFunction GetIntent { get; set; }
 
         public OrchestrationPluginTests()
         {
-            var apiKey = Environment.GetEnvironmentVariable("mlk-openai-test-api-key", EnvironmentVariableTarget.User) ?? throw new Exception("No ApiKey in environment variables.");
-            var endpoint = Environment.GetEnvironmentVariable("mlk-openai-test-endpoint", EnvironmentVariableTarget.User) ?? throw new Exception("No Endpoint in environment variables.");
-
-            Kernel = new KernelBuilder()
-                         .AddAzureOpenAIChatCompletion("gpt-35-turbo-test", "gpt-35-turbo", endpoint, apiKey)
-                         .Build();
-
             var testDir = Environment.CurrentDirectory;
 
-            OrchestrationPlugin = Kernel.CreatePluginFromPromptDirectory(Path.Combine(testDir, "Plugins", "OrchestrationPlugin"));
-            GetIntent = OrchestrationPlugin["GetIntent"];
+            var apiKey =
+                Environment.GetEnvironmentVariable("mlk-openai-test-api-key", EnvironmentVariableTarget.User) ??
+                throw new Exception("No ApiKey in environment variables.");
+            var endpoint =
+                Environment.GetEnvironmentVariable("mlk-openai-test-endpoint", EnvironmentVariableTarget.User) ??
+                throw new Exception("No Endpoint in environment variables.");
 
-            Kernel.PromptRendered += (sender, args) => Console.WriteLine(args.RenderedPrompt);
+            var builder = Kernel.CreateBuilder();
+            builder.AddAzureOpenAIChatCompletion("gpt-35-turbo-test", endpoint, apiKey);
+            builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "OrchestrationPlugin"), "OrchestrationPlugin");
+            MyKernel = builder.Build();
+
+            GetIntent = MyKernel.Plugins.GetFunction("OrchestrationPlugin", "GetIntent");
         }
 
         [Fact]
         public async Task GetIntent_Food_MustWork()
         {
-            var result = await GetIntent.InvokeAsync(Kernel, new KernelArguments(new Dictionary<string, object?>()
+            var result = await GetIntent.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
             {
                 ["input"] = "I want some pizza",
                 ["options"] = "OrderFood, OrderHotel, OrderCar"
@@ -42,7 +43,7 @@ namespace LearnSemanticKernel.Test
         [Fact]
         public async Task GetIntent_Hotel_MustWork()
         {
-            var result = await GetIntent.InvokeAsync(Kernel, new KernelArguments(new Dictionary<string, object?>()
+            var result = await GetIntent.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
             {
                 ["input"] = "I want a good room",
                 ["options"] = "OrderFood, OrderHotel, OrderCar"
