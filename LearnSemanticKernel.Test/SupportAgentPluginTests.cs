@@ -1,4 +1,6 @@
-using Json.Schema.Generation.Intents;
+﻿using Json.Schema.Generation.Intents;
+using LearnSemanticKernel.NativePlugins;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
@@ -24,27 +26,25 @@ namespace LearnSemanticKernel.Test
 
             var builder = Kernel.CreateBuilder();
             builder.AddAzureOpenAIChatCompletion("gpt-35-turbo-test", endpoint, apiKey);
+            builder.Services.AddLogging(loggerBuilder =>
+            {
+                loggerBuilder.ClearProviders();
+                loggerBuilder.AddConsole();
+            });
+
             builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "OrchestrationPlugin"), "OrchestrationPlugin");
             builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "SupportAgentPlugin"), "SupportAgentPlugin");
+            builder.Plugins.AddFromType<SupportAgentPlanner>();
             MyKernel = builder.Build();
 
             GetIntent = MyKernel.Plugins.GetFunction("OrchestrationPlugin", "GetIntent");
-            AnswerChat = MyKernel.Plugins.GetFunction("SupportAgentPlugin", "AnswerChat");
+            AnswerChat = MyKernel.Plugins.GetFunction("SupportAgentPlanner", "AnswerChat");
         }
 
         [Fact]
         public async Task AnswerChat_ProductQuestion_MustWork()
         {
-            var input = "What are your products for sale?";
-
-            //var intent = await GetIntent.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
-            //{
-            //    ["input"] = input,
-            //    ["options"] = "QuestionAboutProduct,WantToPurchase,AngryWithSomething"
-            //}));
-
-            //Assert.Equal("QuestionAboutProduct", intent.GetValue<string>());
-
+            var input = "Does your products meet any specific standard?";
 
             var result = (
                 await AnswerChat.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
@@ -53,7 +53,7 @@ namespace LearnSemanticKernel.Test
                 }))
             ).GetValue<string>();
 
-            Assert.Contains("QuestionAboutProduct", result ?? "");
+            Assert.Contains("standard", result ?? "");
         }
     }
 }

@@ -28,10 +28,10 @@
     <None Update="Plugins\OrchestrationPlugin\GetIntent\skprompt.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Plugins\SupportAgentPlugin\AnswerChat\config.json">
+    <None Update="Plugins\SupportAgentPlugin\HelpWithProduct\config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Plugins\SupportAgentPlugin\AnswerChat\skprompt.txt">
+    <None Update="Plugins\SupportAgentPlugin\HelpWithProduct\skprompt.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
