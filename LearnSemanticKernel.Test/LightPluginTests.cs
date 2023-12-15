@@ -29,8 +29,26 @@ public class LightPluginTests
             loggerBuilder.ClearProviders();
             loggerBuilder.AddConsole();
         });
+
         builder.Plugins.AddFromType<LightPlugin>();
         MyKernel = builder.Build();
+    }
+
+    [Fact]
+    public async Task LightPlugin_DirectTurnOn_MustWork()
+    {
+        var plugin = MyKernel.Plugins[nameof(LightPlugin)];
+
+        var oldState = await plugin["GetState"].InvokeAsync<string>(MyKernel);
+        
+        Assert.Equal("off", oldState);
+
+        var newState = await plugin["ChangeState"].InvokeAsync<string>(MyKernel, new KernelArguments(new Dictionary<string, object?>()
+        {
+            ["newState"] = true
+        }));
+
+        Assert.Equal("on", newState);
     }
 
     [Fact]

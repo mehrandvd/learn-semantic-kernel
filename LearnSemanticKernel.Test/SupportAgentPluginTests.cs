@@ -5,12 +5,13 @@ using Microsoft.SemanticKernel.ChatCompletion;
 
 namespace LearnSemanticKernel.Test
 {
-    public class OrchestrationPluginTests
+    public class SupportAgentPluginTests
     {
         private Kernel MyKernel { get; set; }
+        private KernelFunction AnswerChat { get; set; }
         private KernelFunction GetIntent { get; set; }
 
-        public OrchestrationPluginTests()
+        public SupportAgentPluginTests()
         {
             var testDir = Environment.CurrentDirectory;
 
@@ -24,33 +25,35 @@ namespace LearnSemanticKernel.Test
             var builder = Kernel.CreateBuilder();
             builder.AddAzureOpenAIChatCompletion("gpt-35-turbo-test", endpoint, apiKey);
             builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "OrchestrationPlugin"), "OrchestrationPlugin");
+            builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "SupportAgentPlugin"), "SupportAgentPlugin");
             MyKernel = builder.Build();
 
             GetIntent = MyKernel.Plugins.GetFunction("OrchestrationPlugin", "GetIntent");
+            AnswerChat = MyKernel.Plugins.GetFunction("SupportAgentPlugin", "AnswerChat");
         }
 
         [Fact]
-        public async Task GetIntent_Food_MustWork()
+        public async Task AnswerChat_ProductQuestion_MustWork()
         {
-            var result = await GetIntent.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
-            {
-                ["input"] = "I want some pizza",
-                ["options"] = "OrderFood, OrderHotel, OrderCar"
-            }));
+            var input = "What are your products for sale?";
 
-            Assert.Equal("OrderFood", result.GetValue<string>());
-        }
+            //var intent = await GetIntent.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
+            //{
+            //    ["input"] = input,
+            //    ["options"] = "QuestionAboutProduct,WantToPurchase,AngryWithSomething"
+            //}));
 
-        [Fact]
-        public async Task GetIntent_Hotel_MustWork()
-        {
-            var result = await GetIntent.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
-            {
-                ["input"] = "I want a good room",
-                ["options"] = "OrderFood, OrderHotel, OrderCar"
-            }));
+            //Assert.Equal("QuestionAboutProduct", intent.GetValue<string>());
 
-            Assert.Equal("OrderHotel", result.GetValue<string>());
+
+            var result = (
+                await AnswerChat.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
+                {
+                    ["input"] = input,
+                }))
+            ).GetValue<string>();
+
+            Assert.Contains("QuestionAboutProduct", result ?? "");
         }
     }
 }

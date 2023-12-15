@@ -1,0 +1,12 @@
+User: {{$input}}
+
+---------------------------------------------
+The exact intent of the user is this ```{{OrchestrationPlugin.GetIntent $input options="QuestionAboutProduct,WantToPurchase,AngryWithSomething"}}```
+
+
+Answer with a json like this containing the intent:
+{
+	'intent': "the exact intent"
+}
+
+
