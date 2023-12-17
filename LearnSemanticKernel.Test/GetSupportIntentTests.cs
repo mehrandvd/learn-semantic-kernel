@@ -33,11 +33,11 @@ namespace LearnSemanticKernel.Test
                 loggerBuilder.AddConsole();
             });
 
-            builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "SupportAgentPlugin"), "SupportAgentPlugin");
+            builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "OrchestrationPlugin"));
             builder.Plugins.AddFromType<SupportAgentPlanner>();
             MyKernel = builder.Build();
 
-            GetSupportIntent = MyKernel.Plugins.GetFunction("SupportAgentPlugin", "GetSupportIntent");
+            GetSupportIntent = MyKernel.Plugins.GetFunction("OrchestrationPlugin", "GetSupportIntent");
         }
 
         [Fact]

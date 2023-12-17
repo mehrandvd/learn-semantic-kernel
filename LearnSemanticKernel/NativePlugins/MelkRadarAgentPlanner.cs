@@ -14,7 +14,7 @@ namespace LearnSemanticKernel.NativePlugins
         [KernelFunction, Description("Answer the user")]
         public async Task<string> AnswerChat(Kernel kernel, string input, string history)
         {
-            var getSupportIntent = kernel.Plugins["SupportAgentPlugin"]["GetSupportIntent"];
+            var getSupportIntent = kernel.Plugins["OrchestrationPlugin"]["GetSupportIntent"];
 
             var intentText = (
                 await getSupportIntent.InvokeAsync(kernel, new KernelArguments(new Dictionary<string, object?>()
@@ -30,6 +30,13 @@ namespace LearnSemanticKernel.NativePlugins
             {
                 SupportIntent.QuestionAboutProduct =>
                     await kernel.Plugins["MelkRadarAgentPlugin"]["HelpWithProduct"].InvokeAsync<string>(kernel,
+                        new KernelArguments()
+                        {
+                            ["input"] = input,
+                            ["history"] = history
+                        }),
+                SupportIntent.WantToPurchase =>
+                    await kernel.Plugins["MelkRadarAgentPlugin"]["HelpWithPurchase"].InvokeAsync<string>(kernel,
                         new KernelArguments()
                         {
                             ["input"] = input,

@@ -26,4 +26,8 @@
     <ProjectReference Include="..\LearnSemanticKernel\LearnSemanticKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestConversations\" />
+  </ItemGroup>
+
 </Project>

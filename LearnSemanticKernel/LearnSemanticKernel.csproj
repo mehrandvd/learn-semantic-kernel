@@ -16,6 +16,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Plugins\MelkRadarAgentPlugin\GetAdverRadarInfo\config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Plugins\MelkRadarAgentPlugin\GetAdverRadarInfo\skprompt.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Plugins\MelkRadarAgentPlugin\HelpWithPurchase\config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Plugins\MelkRadarAgentPlugin\HelpWithPurchase\skprompt.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Plugins\MelkRadarAgentPlugin\HelpWithProduct\config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -52,10 +64,10 @@
     <None Update="Plugins\SupportAgentPlugin - Copy\HelpWithProduct\skprompt.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Plugins\SupportAgentPlugin\GetSupportIntent\config.json">
+    <None Update="Plugins\OrchestrationPlugin\GetSupportIntent\config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Plugins\SupportAgentPlugin\GetSupportIntent\skprompt.txt">
+    <None Update="Plugins\OrchestrationPlugin\GetSupportIntent\skprompt.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Plugins\SupportAgentPlugin\HelpWithProduct\config.json">
