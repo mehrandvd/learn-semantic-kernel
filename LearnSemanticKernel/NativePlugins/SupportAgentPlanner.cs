@@ -11,7 +11,7 @@ namespace LearnSemanticKernel.NativePlugins
     public class SupportAgentPlanner
     {
         [KernelFunction, Description("Answer the user")]
-        public async Task<string> AnswerChat(Kernel kernel, string input)
+        public async Task<string> AnswerChat(Kernel kernel, string input, string history)
         {
             var intent = await kernel.Plugins["OrchestrationPlugin"]["GetIntent"].InvokeAsync<string>(kernel, new KernelArguments()
             {
@@ -25,7 +25,8 @@ namespace LearnSemanticKernel.NativePlugins
                     await kernel.Plugins["SupportAgentPlugin"]["HelpWithProduct"].InvokeAsync<string>(kernel,
                         new KernelArguments()
                         {
-                            ["input"] = input
+                            ["input"] = input,
+                            ["history"] = history
                         }),
                 _ => "Oh I don't know what to do with this Mehran!"
             };

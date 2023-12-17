@@ -44,12 +44,19 @@ namespace LearnSemanticKernel.Test
         [Fact]
         public async Task AnswerChat_ProductQuestion_MustWork()
         {
-            var input = "Does your products meet any specific standard?";
+            var input = "Does your Lumia 1050XL meet any specific standard?";
+            
+            var history =
+                """
+                User: Hi
+                Agent: How can I help you?
+                """;
 
             var result = (
                 await AnswerChat.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
                 {
                     ["input"] = input,
+                    ["history"] = history
                 }))
             ).GetValue<string>();
 
