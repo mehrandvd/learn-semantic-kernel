@@ -1,4 +1,5 @@
 ﻿using Json.Schema.Generation.Intents;
+using LearnSemanticKernel.Extensions;
 using LearnSemanticKernel.NativePlugins;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -61,6 +62,78 @@ namespace LearnSemanticKernel.Test
             ).GetValue<string>();
 
             Assert.Contains("standard", result ?? "");
+        }
+
+        [Fact]
+        public async Task AnswerChat_ProductQuestion_SimpleFlow_MustWork()
+        {
+            ChatHistory chatHistory = new ChatHistory();
+
+            chatHistory.AddUserMessage("Hi");
+            chatHistory.AddAssistantMessage("Hi, How can I help you?");
+
+            var history = chatHistory.ToHistory();
+
+            var input = "Does my phone (Lumia 1050XL) support 4G?";
+
+            var result = await AnswerChat.InvokeAsync<string>(MyKernel, new KernelArguments()
+            {
+                ["history"] = history,
+                ["input"] = input
+            });
+
+            Assert.Contains("lumia 1050xl", result?.ToLower());
+
+
+            chatHistory.AddUserMessage(input);
+            chatHistory.AddAssistantMessage("Do I get your question correctly? you are asking whether your phone (Lumia 1050XL) supports 4G?");
+            history = chatHistory.ToHistory();
+
+            input = "Yes";
+
+            result = await AnswerChat.InvokeAsync<string>(MyKernel, new KernelArguments()
+            {
+                ["history"] = history,
+                ["input"] = input
+            });
+
+            Assert.Contains("tech", result?.ToLower());
+        }
+
+        [Fact]
+        public async Task AnswerChat_ProductQuestion_CorrectingQuestion_MustWork()
+        {
+            ChatHistory chatHistory = new ChatHistory();
+
+            chatHistory.AddUserMessage("Hi");
+            chatHistory.AddAssistantMessage("Hi, How can I help you?");
+            chatHistory.AddUserMessage("Does my phone (Lumia 1050XL) support 4G?");
+            chatHistory.AddAssistantMessage("Do I get your question correctly? you are asking whether your phone (Lumia 1050XL) supports 4G?");
+            var history = chatHistory.ToHistory();
+
+            var input = "No, I want to see if it supports 5G.";
+
+            var result = await AnswerChat.InvokeAsync<string>(MyKernel, new KernelArguments()
+            {
+                ["history"] = history,
+                ["input"] = input
+            });
+
+            Assert.Contains("5g", result?.ToLower());
+
+            chatHistory.AddUserMessage(input);
+            chatHistory.AddAssistantMessage("Do I get your question correctly? you are asking whether your phone (Lumia 1050XL) supports 5G?");
+            history = chatHistory.ToHistory();
+
+            input = "Yes, it's correct";
+
+            result = await AnswerChat.InvokeAsync<string>(MyKernel, new KernelArguments()
+            {
+                ["history"] = history,
+                ["input"] = input
+            });
+
+            Assert.Contains("tech", result?.ToLower());
         }
     }
 }
