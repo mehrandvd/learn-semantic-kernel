@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "type": "completion",
-  "description": "Answers the user chat.",
+  "description": "Get intent of user for chat support.",
   "completion": {
     "max_tokens": 500,
     "temperature": 0.0,

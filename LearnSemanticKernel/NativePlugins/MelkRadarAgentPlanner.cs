@@ -9,21 +9,27 @@ using Microsoft.SemanticKernel;
 
 namespace LearnSemanticKernel.NativePlugins
 {
-    public class SupportAgentPlanner
+    public class MelkRadarAgentPlanner
     {
         [KernelFunction, Description("Answer the user")]
         public async Task<string> AnswerChat(Kernel kernel, string input, string history)
         {
-            var intent = await kernel.Plugins["OrchestrationPlugin"]["GetIntent"].InvokeAsync<string>(kernel, new KernelArguments()
-            {
-                ["input"] = input,
-                ["options"] = "QuestionAboutProduct,WantToPurchase,AngryWithSomething"
-            });
+            var getSupportIntent = kernel.Plugins["SupportAgentPlugin"]["GetSupportIntent"];
+
+            var intentText = (
+                await getSupportIntent.InvokeAsync(kernel, new KernelArguments(new Dictionary<string, object?>()
+                {
+                    ["input"] = input,
+                    ["history"] = history
+                }))
+            ).GetValue<string>();
+
+            var intent = Enum.Parse<SupportIntent>(intentText??"");
 
             var result = intent switch
             {
-                "QuestionAboutProduct" =>
-                    await kernel.Plugins["SupportAgentPlugin"]["HelpWithProduct"].InvokeAsync<string>(kernel,
+                SupportIntent.QuestionAboutProduct =>
+                    await kernel.Plugins["MelkRadarAgentPlugin"]["HelpWithProduct"].InvokeAsync<string>(kernel,
                         new KernelArguments()
                         {
                             ["input"] = input,
