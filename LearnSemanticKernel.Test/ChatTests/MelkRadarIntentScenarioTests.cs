@@ -37,7 +37,7 @@ namespace LearnSemanticKernel.Test.ChatTests
             builder.AddAzureOpenAIChatCompletion("gpt-35-turbo-test", endpoint, apiKey);
             builder.Services.AddLogging(loggerBuilder =>
             {
-                loggerBuilder.SetMinimumLevel(LogLevel.Information);
+                loggerBuilder.SetMinimumLevel(LogLevel.Trace).AddDebug();
                 loggerBuilder.ClearProviders();
                 loggerBuilder.AddConsole();
             });
