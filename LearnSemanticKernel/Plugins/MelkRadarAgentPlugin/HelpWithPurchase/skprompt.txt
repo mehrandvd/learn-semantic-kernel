@@ -26,6 +26,12 @@
 
 [[[End of Product Information]]]
 
+[[[Pricing Information]]]
+
+{{MelkRadarAgentPlugin.GetPricingInfo}}
+
+[[[End of Pricing Information]]]
+
 -------------------------------------
 [[[Chat History]]]
 {{$history}}

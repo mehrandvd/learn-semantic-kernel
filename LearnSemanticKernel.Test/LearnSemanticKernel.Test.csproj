@@ -11,10 +11,14 @@
 
   <ItemGroup>
     <None Remove="TestConversations\ChatScenario_1000_01.txt" />
+    <None Remove="TestConversations\ChatScenario_1000_02.txt" />
     <None Remove="TestConversations\Scenario_Test_Parse.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="TestConversations\ChatScenario_1000_02.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="TestConversations\ChatScenario_1000_01.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
