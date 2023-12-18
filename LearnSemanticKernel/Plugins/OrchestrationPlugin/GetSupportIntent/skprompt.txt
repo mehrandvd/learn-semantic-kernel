@@ -6,7 +6,7 @@ User: {{$input}}
 
 ---------------------------------------------
 
-Provide the intent of the user. The intent should be one of the following: QuestionAboutProduct,WantToPurchase,AngryWithSomething
+Provide the intent of the user. The intent should be one of the following: QuestionAboutProduct,AskPriceOrWantToPurchase,AngryWithSomething
 without any spaces, just the option.
 
 

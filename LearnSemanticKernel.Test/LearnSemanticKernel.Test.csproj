@@ -10,19 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="TestConversations\ChatScenario_1000_01.txt" />
-    <None Remove="TestConversations\ChatScenario_1000_02.txt" />
-    <None Remove="TestConversations\Scenario_Test_Parse.txt" />
+    <None Remove="ChatTests\Scenarios\Scenario_1000_01.txt" />
+    <None Remove="ChatTests\Scenarios\Scenario_Pricing_AdverRadar.txt" />
+    <None Remove="ChatTests\Scenarios\Test_Scenario_Parse.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="TestConversations\ChatScenario_1000_02.txt">
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Pricing_AdverRadar.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestConversations\ChatScenario_1000_01.txt">
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_1000_01.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestConversations\Scenario_Test_Parse.txt">
+    <EmbeddedResource Include="ChatTests\Scenarios\Test_Scenario_Parse.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

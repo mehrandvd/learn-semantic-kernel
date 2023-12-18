@@ -17,7 +17,7 @@ namespace LearnSemanticKernel.NativePlugins
             var intent = await kernel.Plugins["OrchestrationPlugin"]["GetIntent"].InvokeAsync<string>(kernel, new KernelArguments()
             {
                 ["input"] = input,
-                ["options"] = "QuestionAboutProduct,WantToPurchase,AngryWithSomething"
+                ["options"] = "QuestionAboutProduct,AskPriceOrWantToPurchase,AngryWithSomething"
             });
 
             var result = intent switch

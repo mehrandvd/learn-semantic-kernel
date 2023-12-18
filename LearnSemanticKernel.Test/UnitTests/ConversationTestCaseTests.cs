@@ -13,14 +13,14 @@ namespace LearnSemanticKernel.Test.UnitTests
         [Fact]
         public void ConversationTestCase_LoadScenario_MustWork()
         {
-            var scenario = ConversationScenarioUtil.LoadScenario("Scenario_Test_Parse");
+            var scenario = ConversationScenarioUtil.LoadScenario("Test_Scenario_Parse");
             Assert.NotNull(scenario);
         }
 
         [Fact]
         public void ConversationTestCase_Parse_MustWork()
         {
-            var scenario = ConversationScenarioUtil.LoadScenario("Scenario_Test_Parse");
+            var scenario = ConversationScenarioUtil.LoadScenario("Test_Scenario_Parse");
             var conversation = ConversationScenario.Parse(scenario);
 
             Assert.Equal(6, conversation.History.Count);

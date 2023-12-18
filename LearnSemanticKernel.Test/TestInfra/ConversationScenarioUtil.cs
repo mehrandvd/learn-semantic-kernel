@@ -13,7 +13,7 @@ namespace LearnSemanticKernel.Test.TestInfra
         public static string LoadScenario(string scenario)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = $"LearnSemanticKernel.Test.TestConversations.{scenario}.txt";
+            var resourceName = $"LearnSemanticKernel.Test.ChatTests.Scenarios.{scenario}.txt";
             using Stream stream = assembly.GetManifestResourceStream(resourceName) ?? throw new InvalidOperationException();
             using StreamReader reader = new StreamReader(stream, Encoding.UTF8);
             string result = reader.ReadToEnd();
@@ -25,8 +25,8 @@ namespace LearnSemanticKernel.Test.TestInfra
             var assembly = Assembly.GetExecutingAssembly();
             
             var names = assembly.GetManifestResourceNames()
-                    .Where(s => s.StartsWith("LearnSemanticKernel.Test.TestConversations.ChatScenario"))
-                    .Select(s=>Regex.Match(s, @"LearnSemanticKernel\.Test\.TestConversations\.(?<scenario>ChatScenario.*)\.txt").Groups["scenario"].Value)
+                    .Where(s => s.StartsWith("LearnSemanticKernel.Test.ChatTests.Scenarios.Scenario"))
+                    .Select(s=>Regex.Match(s, @"LearnSemanticKernel\.Test\.ChatTests\.Scenarios\.(?<scenario>Scenario.*)\.txt").Groups["scenario"].Value)
                     .ToList();
 
             return names;

@@ -37,7 +37,7 @@ namespace LearnSemanticKernel.NativePlugins
                             ["input"] = input,
                             ["history"] = history
                         }),
-                SupportIntent.WantToPurchase =>
+                SupportIntent.AskPriceOrWantToPurchase =>
                     await kernel.Plugins["MelkRadarAgentPlugin"]["HelpWithPurchase"].InvokeAsync<string>(kernel,
                         new KernelArguments()
                         {

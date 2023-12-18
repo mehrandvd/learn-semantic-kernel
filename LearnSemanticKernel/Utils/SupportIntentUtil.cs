@@ -6,7 +6,7 @@ public class SupportIntentUtil
     {
         [SupportIntent.None] = "Can not specify the intent.",
         [SupportIntent.QuestionAboutProduct] = "User is asking a question about product",
-        [SupportIntent.WantToPurchase] = "User needs or wants to purchase something",
+        [SupportIntent.AskPriceOrWantToPurchase] = "User needs or wants to purchase something",
         [SupportIntent.AngryWithSomething] = "User is angry with something and need care"
     };
 

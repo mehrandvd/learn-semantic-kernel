@@ -87,7 +87,7 @@ namespace LearnSemanticKernel.Test.PluginTests
         }
 
         [Fact]
-        public async Task GetSupportIntent_WantToPurchase_Persian_MustWork()
+        public async Task GetSupportIntent_AskPriceOrWantToPurchase_Persian_MustWork()
         {
             ChatHistory chatHistory = new ChatHistory();
 
@@ -106,7 +106,7 @@ namespace LearnSemanticKernel.Test.PluginTests
                 }))
             ).GetValue<string>();
 
-            Assert.Equal(SupportIntent.WantToPurchase.ToString(), result ?? "");
+            Assert.Equal(SupportIntent.AskPriceOrWantToPurchase.ToString(), result ?? "");
         }
 
         [Fact]

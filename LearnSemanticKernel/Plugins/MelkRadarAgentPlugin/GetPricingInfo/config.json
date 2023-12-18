@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "type": "completion",
-  "description": "Answers the user chat.",
+  "description": "Get the pirce list of products.",
   "completion": {
     "max_tokens": 500,
     "temperature": 0.1,
@@ -10,16 +10,7 @@
   },
   "input": {
     "parameters": [
-      {
-        "name": "input",
-        "description": "The user's request.",
-        "defaultValue": ""
-      },
-      {
-        "name": "history",
-        "description": "The chat history.",
-        "defaultValue": ""
-      }
+
     ]
   }
 }

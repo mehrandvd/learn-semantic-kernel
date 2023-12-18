@@ -10,7 +10,7 @@ namespace LearnSemanticKernel.Utils
     {
         None,
         QuestionAboutProduct,
-        WantToPurchase,
+        AskPriceOrWantToPurchase,
         AngryWithSomething
     }
 }

@@ -84,6 +84,8 @@ namespace LearnSemanticKernel.Test.ChatTests
                     ["input"] = input
                 });
 
+                Console.WriteLine(result);
+
                 var status = await TestCriteria.InvokeAsync<string>(MyKernel, new KernelArguments()
                 {
                     ["input"] = result,
