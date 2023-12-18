@@ -15,13 +15,13 @@ using Microsoft.SemanticKernel.ChatCompletion;
 
 namespace LearnSemanticKernel.Test.ChatTests
 {
-    public class ProductQuestionChatTests
+    public class MelkRadarChatScenarioTests
     {
         private Kernel MyKernel { get; set; }
         private KernelFunction AnswerChat { get; set; }
         private KernelFunction TestCriteria { get; set; }
 
-        public ProductQuestionChatTests()
+        public MelkRadarChatScenarioTests()
         {
             var testDir = Environment.CurrentDirectory;
 
@@ -78,23 +78,28 @@ namespace LearnSemanticKernel.Test.ChatTests
                 if (agentChat.Role != AuthorRole.Assistant)
                     throw new InvalidOperationException($"Expected Assistant chat: {agentChat.Content}");
 
-                var result = await AnswerChat.InvokeAsync<string>(MyKernel, new KernelArguments()
+                if (!string.IsNullOrWhiteSpace(agentChat.Criteria))
                 {
-                    ["history"] = history.ToHistory(),
-                    ["input"] = input
-                });
+                    var result = await AnswerChat.InvokeAsync<string>(MyKernel, new KernelArguments()
+                    {
+                        ["history"] = history.ToHistory(),
+                        ["input"] = input
+                    });
 
-                Console.WriteLine(result);
+                    Console.WriteLine(result);
 
-                var status = await TestCriteria.InvokeAsync<string>(MyKernel, new KernelArguments()
-                {
-                    ["input"] = result,
-                    ["criteria"] = agentChat.Criteria
-                });
+                    var status = await TestCriteria.InvokeAsync<string>(MyKernel, new KernelArguments()
+                    {
+                        ["input"] = result,
+                        ["criteria"] = agentChat.Criteria
+                    });
 
-                var message = $"{result} failed criteria: {agentChat.Criteria}";
+                    var message = $"{result} {Environment.NewLine} Failed Criteria: {Environment.NewLine}{agentChat.Criteria}";
+                    Assert.True(status == "True", message);
+                }
+                
 
-                Assert.True(status == "True", message);
+                
 
                 history.AddUserMessage(userChat.Content);
                 history.AddAssistantMessage(agentChat.Content);
