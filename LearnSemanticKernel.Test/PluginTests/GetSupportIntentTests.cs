@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 
-namespace LearnSemanticKernel.Test
+namespace LearnSemanticKernel.Test.PluginTests
 {
     public class GetSupportIntentTests
     {

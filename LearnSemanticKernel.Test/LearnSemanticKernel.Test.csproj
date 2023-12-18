@@ -10,10 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TestConversations\ChatScenario_1000_01.txt" />
     <None Remove="TestConversations\Scenario_Test_Parse.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="TestConversations\ChatScenario_1000_01.txt" />
     <EmbeddedResource Include="TestConversations\Scenario_Test_Parse.txt" />
   </ItemGroup>
 

@@ -9,14 +9,14 @@ using Microsoft.Extensions.Logging.Console;
 using Json.Schema.Generation.Intents;
 using LearnSemanticKernel.Extensions;
 
-namespace LearnSemanticKernel.Test;
+namespace LearnSemanticKernel.Test.PluginTests;
 
-public class PersianHelpWithProductPluginTests
+public class HelpWithProductPluginTests
 {
     private Kernel MyKernel { get; set; }
     private KernelFunction HelpWithProduct { get; set; }
 
-    public PersianHelpWithProductPluginTests()
+    public HelpWithProductPluginTests()
     {
         var testDir = Environment.CurrentDirectory;
 
@@ -37,11 +37,11 @@ public class PersianHelpWithProductPluginTests
         });
 
         builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "OrchestrationPlugin"), "OrchestrationPlugin");
-        builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "PersianSupportAgentPlugin"), "PersianSupportAgentPlugin");
+        builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "SupportAgentPlugin"), "SupportAgentPlugin");
         builder.Plugins.AddFromType<SupportAgentPlanner>();
         MyKernel = builder.Build();
-        
-        HelpWithProduct = MyKernel.Plugins.GetFunction("PersianSupportAgentPlugin", "HelpWithProduct");
+
+        HelpWithProduct = MyKernel.Plugins.GetFunction("SupportAgentPlugin", "HelpWithProduct");
     }
 
     [Fact]
@@ -49,12 +49,12 @@ public class PersianHelpWithProductPluginTests
     {
         ChatHistory chatHistory = new ChatHistory();
 
-        chatHistory.AddUserMessage("سلام");
-        chatHistory.AddAssistantMessage("سلام، چطور می‌تونم کمکتون کنم؟");
+        chatHistory.AddUserMessage("Hi");
+        chatHistory.AddAssistantMessage("Hi, How can I help you?");
 
         var history = chatHistory.ToHistory();
 
-        var input = "آیا گوشی لومیای ۱۰۵۰ من اینترنت نسل چهار رو هم پشتیبانی می‌کنه؟";
+        var input = "Does my phone (Lumia 1050XL) support 4G?";
 
         var result = await HelpWithProduct.InvokeAsync<string>(MyKernel, new KernelArguments()
         {
@@ -62,14 +62,14 @@ public class PersianHelpWithProductPluginTests
             ["input"] = input
         });
 
-        Assert.Contains("آیا درست متوجه شدم", result?.ToLower());
+        Assert.Contains("lumia 1050xl", result?.ToLower());
 
 
         chatHistory.AddUserMessage(input);
-        chatHistory.AddAssistantMessage("سوال شما اینه که «آیا گوشی لومیای ۱۰۵۰ من اینترنت نسل چهار رو هم پشتیبانی می‌کنه؟»، آیا درست متوجه شدم؟");
+        chatHistory.AddAssistantMessage("Do I get your question correctly? you are asking whether your phone (Lumia 1050XL) supports 4G?");
         history = chatHistory.ToHistory();
 
-        input = "بله";
+        input = "Yes";
 
         result = await HelpWithProduct.InvokeAsync<string>(MyKernel, new KernelArguments()
         {
@@ -77,7 +77,7 @@ public class PersianHelpWithProductPluginTests
             ["input"] = input
         });
 
-        Assert.Contains("ملک‌رادار", result?.ToLower());
+        Assert.Contains("tech", result?.ToLower());
     }
 
     [Fact]
@@ -85,13 +85,13 @@ public class PersianHelpWithProductPluginTests
     {
         ChatHistory chatHistory = new ChatHistory();
 
-        chatHistory.AddUserMessage("سلام");
-        chatHistory.AddAssistantMessage("سلام، چطور می‌تونم کمکتون کنم؟");
-        chatHistory.AddUserMessage("آیا گوشی لومیای ۱۰۵۰ من اینترنت نسل چهار رو هم پشتیبانی می‌کنه؟");
-        chatHistory.AddAssistantMessage("سوال شما اینه که «آیا گوشی لومیای ۱۰۵۰ من اینترنت نسل چهار رو هم پشتیبانی می‌کنه؟»، آیا درست متوجه شدم؟");
+        chatHistory.AddUserMessage("Hi");
+        chatHistory.AddAssistantMessage("Hi, How can I help you?");
+        chatHistory.AddUserMessage("Does my phone (Lumia 1050XL) support 4G?");
+        chatHistory.AddAssistantMessage("Do I get your question correctly? you are asking whether your phone (Lumia 1050XL) supports 4G?");
         var history = chatHistory.ToHistory();
 
-        var input = "نه من می‌خوام بفهمم سوال من در مورد نسل پنج هست؟";
+        var input = "No, I want to see if it supports 5G.";
 
         var result = await HelpWithProduct.InvokeAsync<string>(MyKernel, new KernelArguments()
         {
@@ -99,13 +99,13 @@ public class PersianHelpWithProductPluginTests
             ["input"] = input
         });
 
-        Assert.Contains("نسل پنج", result?.ToLower());
+        Assert.Contains("5g", result?.ToLower());
 
         chatHistory.AddUserMessage(input);
-        chatHistory.AddAssistantMessage("سوال شما اینه که آیا گوشی لومیای ۱۰۵۰ پشتیبانی از اینترنت نسل پنج (5G) داره؟ من متوجه شدم.");
+        chatHistory.AddAssistantMessage("Do I get your question correctly? you are asking whether your phone (Lumia 1050XL) supports 5G?");
         history = chatHistory.ToHistory();
 
-        input = "بله درسته";
+        input = "Yes, it's correct";
 
         result = await HelpWithProduct.InvokeAsync<string>(MyKernel, new KernelArguments()
         {
@@ -113,6 +113,6 @@ public class PersianHelpWithProductPluginTests
             ["input"] = input
         });
 
-        Assert.Contains("ملک‌رادار", result?.ToLower());
+        Assert.Contains("tech", result?.ToLower());
     }
 }

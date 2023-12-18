@@ -1,0 +1,13 @@
+[[[INPUT]]]
+{{$input}}
+[[[END OF INPUT]]]
+
+[[[CRITERIA]]]
+{{$criteria}}
+[[[END OF INPUT]]]
+
+---------------------------------------------
+
+Check if the input meets the specified criteria.
+Provide the result the one of the following: True,False.
+without any spaces, just the result.

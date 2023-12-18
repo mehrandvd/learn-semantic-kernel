@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging.Console;
 using Json.Schema.Generation.Intents;
 using LearnSemanticKernel.Extensions;
 
-namespace LearnSemanticKernel.Test;
+namespace LearnSemanticKernel.Test.PluginTests;
 
 public class MelkRadarAgentTests
 {
@@ -40,7 +40,7 @@ public class MelkRadarAgentTests
         builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "MelkRadarAgentPlugin"));
         builder.Plugins.AddFromType<MelkRadarAgentPlanner>();
         MyKernel = builder.Build();
-        
+
         AnswerChat = MyKernel.Plugins.GetFunction("MelkRadarAgentPlanner", "AnswerChat");
     }
 

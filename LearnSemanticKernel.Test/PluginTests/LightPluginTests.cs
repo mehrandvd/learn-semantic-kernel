@@ -7,7 +7,7 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.Extensions.Logging.Console;
 
-namespace LearnSemanticKernel.Test;
+namespace LearnSemanticKernel.Test.PluginTests;
 
 public class LightPluginTests
 {
@@ -40,7 +40,7 @@ public class LightPluginTests
         var plugin = MyKernel.Plugins[nameof(LightPlugin)];
 
         var oldState = await plugin["GetState"].InvokeAsync<string>(MyKernel);
-        
+
         Assert.Equal("off", oldState);
 
         var newState = await plugin["ChangeState"].InvokeAsync<string>(MyKernel, new KernelArguments(new Dictionary<string, object?>()
