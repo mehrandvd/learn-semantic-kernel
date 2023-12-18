@@ -24,21 +24,29 @@ namespace LearnSemanticKernel.NativePlugins
                 }))
             ).GetValue<string>();
 
-            Enum.TryParse(typeof(SupportIntent), intentText ?? "", out var retIntent);
+            Console.WriteLine($"INTENT: {intentText}");
+
+            if (!Enum.TryParse(typeof(SupportIntent), intentText ?? "", out var retIntent))
+            {
+                Console.WriteLine($"UNABLE TO PARSE INTENT: {intentText}");
+            }
             
             SupportIntent intent = (SupportIntent)(retIntent ?? SupportIntent.QuestionAboutProduct) ;
-                
+
+            var helpWithProduct = kernel.Plugins["MelkRadarAgentPlugin"]["HelpWithProduct"];
+            var helpWithPurchase = kernel.Plugins["MelkRadarAgentPlugin"]["HelpWithPurchase"];
+
             var result = intent switch
             {
                 SupportIntent.QuestionAboutProduct =>
-                    await kernel.Plugins["MelkRadarAgentPlugin"]["HelpWithProduct"].InvokeAsync<string>(kernel,
+                    await kernel.InvokeAsync<string>(helpWithProduct,
                         new KernelArguments()
                         {
                             ["input"] = input,
                             ["history"] = history
                         }),
                 SupportIntent.AskPriceOrWantToPurchase =>
-                    await kernel.Plugins["MelkRadarAgentPlugin"]["HelpWithPurchase"].InvokeAsync<string>(kernel,
+                    await kernel.InvokeAsync<string>(helpWithPurchase,
                         new KernelArguments()
                         {
                             ["input"] = input,
