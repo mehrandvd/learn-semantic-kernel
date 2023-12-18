@@ -52,21 +52,44 @@ namespace LearnSemanticKernel.Test.ChatTests
         [Fact]
         public async Task ChatScenario_1000_01()
         {
-            var scenario = ConversationTestCase.Parse(ConversationScenarioUtil.LoadScenario("ChatScenario_1000_01"));
+            var scenario = ConversationScenario.Parse(ConversationScenarioUtil.LoadScenario("ChatScenario_1000_01"));
 
-            var result = await AnswerChat.InvokeAsync<string>(MyKernel, new KernelArguments()
+            var history = new ChatHistory();
+            var input = "";
+
+            var chats = new Queue<ChatItem>(scenario.History);
+
+            while (chats.Count > 0)
             {
-                ["history"] = scenario.History.ToHistory(),
-                ["input"] = scenario.Input
-            });
+                var userChat = chats.Dequeue();
 
-            var status = await TestCriteria.InvokeAsync<string>(MyKernel, new KernelArguments()
-            {
-                ["input"] = result,
-                ["criteria"] = scenario.AnswerCriteria
-            });
+                if (userChat.Role != AuthorRole.User)
+                    throw new InvalidOperationException($"Expected User chat: {userChat.Content}");
+                input = userChat.Content;
 
-            Assert.Equal("True", status);
+                var agentChat = chats.Dequeue();
+                if (agentChat.Role != AuthorRole.Assistant)
+                    throw new InvalidOperationException($"Expected Assistant chat: {agentChat.Content}");
+
+                var result = await AnswerChat.InvokeAsync<string>(MyKernel, new KernelArguments()
+                {
+                    ["history"] = history.ToHistory(),
+                    ["input"] = input
+                });
+
+                var status = await TestCriteria.InvokeAsync<string>(MyKernel, new KernelArguments()
+                {
+                    ["input"] = result,
+                    ["criteria"] = agentChat.Criteria
+                });
+
+                var message = $"{result} failed criteria: {agentChat.Criteria}";
+
+                Assert.True(status == "True", message);
+
+                history.AddUserMessage(userChat.Content);
+                history.AddAssistantMessage(agentChat.Content);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LearnSemanticKernel.Test.TestInfra;
+using Microsoft.SemanticKernel.ChatCompletion;
 
 namespace LearnSemanticKernel.Test.UnitTests
 {
@@ -20,11 +21,16 @@ namespace LearnSemanticKernel.Test.UnitTests
         public void ConversationTestCase_Parse_MustWork()
         {
             var scenario = ConversationScenarioUtil.LoadScenario("Scenario_Test_Parse");
-            var conversation = ConversationTestCase.Parse(scenario);
+            var conversation = ConversationScenario.Parse(scenario);
 
-            Assert.Equal(4, conversation.History.Count);
-            Assert.NotNull(conversation.Input);
-            Assert.NotNull(conversation.AnswerCriteria);
+            Assert.Equal(5, conversation.History.Count);
+            Assert.Equal(" - به خراسان اشاره شده", conversation.AnswerCriteria);
+
+            foreach (var chatItem in conversation.History)
+            {
+                if (chatItem.Role == AuthorRole.Assistant)
+                    Assert.NotNull(chatItem.Criteria);
+            }
         }
     }
 }

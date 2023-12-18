@@ -15,8 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="TestConversations\ChatScenario_1000_01.txt" />
-    <EmbeddedResource Include="TestConversations\Scenario_Test_Parse.txt" />
+    <EmbeddedResource Include="TestConversations\ChatScenario_1000_01.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestConversations\Scenario_Test_Parse.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

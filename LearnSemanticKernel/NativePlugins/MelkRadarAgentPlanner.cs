@@ -24,8 +24,10 @@ namespace LearnSemanticKernel.NativePlugins
                 }))
             ).GetValue<string>();
 
-            var intent = Enum.Parse<SupportIntent>(intentText??"");
-
+            Enum.TryParse(typeof(SupportIntent), intentText ?? "", out var retIntent);
+            
+            SupportIntent intent = (SupportIntent)(retIntent ?? SupportIntent.QuestionAboutProduct) ;
+                
             var result = intent switch
             {
                 SupportIntent.QuestionAboutProduct =>
