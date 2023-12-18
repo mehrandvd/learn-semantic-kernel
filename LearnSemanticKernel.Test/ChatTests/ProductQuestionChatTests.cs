@@ -2,6 +2,7 @@
 using LearnSemanticKernel.Test.TestInfra;
 using Microsoft.SemanticKernel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -49,10 +50,16 @@ namespace LearnSemanticKernel.Test.ChatTests
             TestCriteria = MyKernel.Plugins.GetFunction("OrchestrationPlugin", "TestCriteria");
         }
 
-        [Fact]
-        public async Task ChatScenario_1000_01()
+        [Theory]
+        [MemberData(nameof(GetScenarios))]
+        public async Task ChatScenario_MustWork(string scenario)
         {
-            var scenario = ConversationScenario.Parse(ConversationScenarioUtil.LoadScenario("ChatScenario_1000_01"));
+            await TestScenarioAsync(scenario);
+        }
+
+        private async Task TestScenarioAsync(string scenarioName)
+        {
+            var scenario = ConversationScenario.Parse(ConversationScenarioUtil.LoadScenario(scenarioName));
 
             var history = new ChatHistory();
             var input = "";
@@ -91,5 +98,12 @@ namespace LearnSemanticKernel.Test.ChatTests
                 history.AddAssistantMessage(agentChat.Content);
             }
         }
+
+        public static IEnumerable<object[]> GetScenarios()
+        {
+            var scenarios = ConversationScenarioUtil.GetScenarioNames();
+            return scenarios.Select(s=>new object[]{s});
+        }
+
     }
 }

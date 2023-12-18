@@ -23,8 +23,7 @@ namespace LearnSemanticKernel.Test.UnitTests
             var scenario = ConversationScenarioUtil.LoadScenario("Scenario_Test_Parse");
             var conversation = ConversationScenario.Parse(scenario);
 
-            Assert.Equal(5, conversation.History.Count);
-            Assert.Equal(" - به خراسان اشاره شده", conversation.AnswerCriteria);
+            Assert.Equal(6, conversation.History.Count);
 
             foreach (var chatItem in conversation.History)
             {

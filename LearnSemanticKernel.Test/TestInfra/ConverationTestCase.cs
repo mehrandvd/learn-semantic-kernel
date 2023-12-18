@@ -13,13 +13,10 @@ namespace LearnSemanticKernel.Test.TestInfra
     public class ConversationScenario
     {
         public List<ChatItem> History { get; set; } = new();
-        public required string AnswerCriteria { get; set; }
-        public required string AnswerSample { get; set; }
 
         public static ConversationScenario Parse(string text)
         {
-            var parts = text.Split("------------------\r\n[#ANSWER_CRITERIA]");
-            var chatPart = parts[0];
+            var chatPart = text;
 
             var matches = Regex.Matches(chatPart, @"\[\#(?<role>USER|AGENT)\][\n\r]*(?<body>[^\[]*)");
             //var matches = Regex.Matches(chatPart, @"\[\#(?<role>USER|AGENT)\][\n\r]*(?<body>.*)");
@@ -44,15 +41,9 @@ namespace LearnSemanticKernel.Test.TestInfra
 
             var history = chats;
 
-            var answerPart = parts[1];
-            var answerParts = answerPart.Split("[#ANSWER_SAMPLE]");
-            var criteria = answerParts[0].Trim('\n', '\r');
-            var sample = answerParts[1].Trim('\n', '\r');
             return new ConversationScenario()
             {
                 History = history,
-                AnswerCriteria = criteria,
-                AnswerSample = sample
             };
         }
     }
