@@ -8,6 +8,8 @@
 
 ---------------------------------------------
 
-Check if the input meets the specified criteria.
-Provide the result the one of the following: True,False.
-without any spaces, just the result.
+Check if the input meets all requirements provided in [[[CRITERIA]]] section.
+INSTRUCTION: 
+	1. for each item in the [[[CRITERIA]]] section check if the [[[INPUT]]] meets that criteria,
+		- if input meets all the critera items, return True (just the word without spaces), 
+		- if input doesn't meet one or more of the items, otherwise return False, and explain (in persian) why the criteria has not meet. 
