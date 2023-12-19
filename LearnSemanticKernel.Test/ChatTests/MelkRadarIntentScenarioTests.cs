@@ -52,14 +52,15 @@ namespace LearnSemanticKernel.Test.ChatTests
         public async Task ChatScenario_MustWork()
         {
             await TestScenarioAsync("Scenario_Pricing_AdverRadar", SupportIntent.WantToPurchase.ToString());
+            await TestScenarioAsync("Scenario_Product_RegisterAdver", SupportIntent.QuestionAboutProduct.ToString());
         }
 
         private async Task TestScenarioAsync(string scenarioName, string intent)
         {
             var scenario = ConversationScenario.Parse(ConversationScenarioUtil.LoadScenario(scenarioName));
 
-            var history = new ChatHistory(scenario.History.Take(scenario.History.Count-1).Select(c=>new ChatMessageContent(c.Role, c.Content)));
-            var input = scenario.History.Last().Content ?? "";
+            var history = new ChatHistory(scenario.History.Take(scenario.History.Count-2).Select(c=>new ChatMessageContent(c.Role, c.Content)));
+            var input = scenario.History.ElementAt(scenario.History.Count-2).Content ?? "";
 
             var result = (
                 await GetSupportIntent.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
