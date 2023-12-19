@@ -13,6 +13,9 @@
     <None Remove="ChatTests\Scenarios\Scenario_Pricing_AdverRadar.txt" />
     <None Remove="ChatTests\Scenarios\Scenario_Product_DivarComparison.txt" />
     <None Remove="ChatTests\Scenarios\Scenario_Product_Khorasan.txt" />
+    <None Remove="ChatTests\Scenarios\Scenario_Product_OwnerName.txt" />
+    <None Remove="ChatTests\Scenarios\Scenario_Product_RegisterAdver.txt" />
+    <None Remove="ChatTests\Scenarios\Scenario_Product_ShomalSources.txt" />
     <None Remove="ChatTests\Scenarios\Test_Scenario_Parse.txt" />
   </ItemGroup>
 
@@ -21,6 +24,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Pricing_AdverRadar.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_RegisterAdver.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_OwnerName.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_ShomalSources.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_Khorasan.txt">
