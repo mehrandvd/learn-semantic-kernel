@@ -51,7 +51,7 @@ namespace LearnSemanticKernel.Test.ChatTests
         [Fact]
         public async Task ChatScenario_MustWork()
         {
-            await TestScenarioAsync("Scenario_Pricing_AdverRadar", SupportIntent.AskPriceOrWantToPurchase.ToString());
+            await TestScenarioAsync("Scenario_Pricing_AdverRadar", SupportIntent.WantToPurchase.ToString());
         }
 
         private async Task TestScenarioAsync(string scenarioName, string intent)

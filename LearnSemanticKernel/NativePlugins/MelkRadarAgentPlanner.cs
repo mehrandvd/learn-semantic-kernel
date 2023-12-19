@@ -45,7 +45,7 @@ namespace LearnSemanticKernel.NativePlugins
                             ["input"] = input,
                             ["history"] = history
                         }),
-                SupportIntent.AskPriceOrWantToPurchase =>
+                SupportIntent.WantToPurchase =>
                     await kernel.InvokeAsync<string>(helpWithPurchase,
                         new KernelArguments()
                         {

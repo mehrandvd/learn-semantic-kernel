@@ -83,7 +83,7 @@ namespace LearnSemanticKernel.Test.PluginTests
                 }))
             ).GetValue<string>();
 
-            Assert.Equal(SupportIntent.AskPriceOrWantToPurchase.ToString(), result ?? "");
+            Assert.Equal(SupportIntent.WantToPurchase.ToString(), result ?? "");
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace LearnSemanticKernel.Test.PluginTests
                 }))
             ).GetValue<string>();
 
-            Assert.Equal(SupportIntent.AskPriceOrWantToPurchase.ToString(), result ?? "");
+            Assert.Equal(SupportIntent.WantToPurchase.ToString(), result ?? "");
         }
 
         [Fact]

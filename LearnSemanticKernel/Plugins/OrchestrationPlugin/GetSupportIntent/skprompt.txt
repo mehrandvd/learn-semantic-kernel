@@ -5,8 +5,21 @@
 User: {{$input}}
 
 ---------------------------------------------
+Consider these intents:
+[[[INTENT DESCRIPTIONS]]]
 
-Provide the intent of the user. The intent should be one of the following: QuestionAboutProduct,AskPriceOrWantToPurchase,AngryWithSomething
+# WantToPurchase
+User asks about the price or wants to purchase something
+
+# AngryWithSomething
+User is angry with something and need care
+
+# QuestionAboutProduct
+User is want to know more about a product (not the price)
+
+[[[END OF INTENT DESCRIPTIONS]]]
+
+Provide the intent of the user. The intent should be one of the following: QuestionAboutProduct,WantToPurchase,AngryWithSomething
 without any spaces, just the option.
 
 
