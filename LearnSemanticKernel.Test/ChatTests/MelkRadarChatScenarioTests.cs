@@ -12,6 +12,7 @@ using LearnSemanticKernel.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.ChatCompletion;
+using Xunit.Abstractions;
 
 namespace LearnSemanticKernel.Test.ChatTests
 {
@@ -21,8 +22,12 @@ namespace LearnSemanticKernel.Test.ChatTests
         private KernelFunction AnswerChat { get; set; }
         private KernelFunction TestCriteria { get; set; }
 
-        public MelkRadarChatScenarioTests()
+        private ITestOutputHelper Output { get; set; }
+
+        public MelkRadarChatScenarioTests(ITestOutputHelper output)
         {
+            Output = output;
+
             var testDir = Environment.CurrentDirectory;
 
             var apiKey =
@@ -86,16 +91,23 @@ namespace LearnSemanticKernel.Test.ChatTests
                         ["input"] = input
                     });
 
-                    Console.WriteLine(result);
-
                     var status = await TestCriteria.InvokeAsync<string>(MyKernel, new KernelArguments()
                     {
                         ["input"] = result,
                         ["criteria"] = agentChat.Criteria
                     });
 
-                    var message = $"{result} {Environment.NewLine} Failed Criteria: {Environment.NewLine}{agentChat.Criteria}";
+                    var message = $"""
+                            Failed criteria: 
+                            {status}
+                            Result:
+                            {result}
+                            Whole Criteria:
+                            {agentChat.Criteria}
+                            """;
                     Assert.True(status == "True", message);
+
+                    Output.WriteLine(result);
                 }
                 
 
