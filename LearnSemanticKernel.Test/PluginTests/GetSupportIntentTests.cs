@@ -41,30 +41,7 @@ namespace LearnSemanticKernel.Test.PluginTests
         }
 
         [Fact]
-        public async Task GetSupportIntent_ProductQuestion_Simple_MustWork()
-        {
-            ChatHistory chatHistory = new ChatHistory();
-
-            chatHistory.AddUserMessage("Hi");
-            chatHistory.AddAssistantMessage("Hi, How can I help you?");
-
-            var history = chatHistory.ToHistory();
-
-            var input = "Does my phone (Lumia 1050XL) support 4G?";
-
-            var result = (
-                await GetSupportIntent.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
-                {
-                    ["input"] = input,
-                    ["history"] = history
-                }))
-            ).GetValue<string>();
-
-            Assert.Equal(SupportIntent.QuestionAboutProduct.ToString(), result ?? "");
-        }
-
-        [Fact]
-        public async Task GetSupportIntent_ProductQuestion_Persian_MustWork()
+        public async Task GetSupportIntent_ProductQuestion_MustWork()
         {
             ChatHistory chatHistory = new ChatHistory();
 
@@ -87,7 +64,7 @@ namespace LearnSemanticKernel.Test.PluginTests
         }
 
         [Fact]
-        public async Task GetSupportIntent_AskPriceOrWantToPurchase_Persian_MustWork()
+        public async Task GetSupportIntent_PurchaseRequest_MustWork()
         {
             ChatHistory chatHistory = new ChatHistory();
 
@@ -110,7 +87,30 @@ namespace LearnSemanticKernel.Test.PluginTests
         }
 
         [Fact]
-        public async Task GetSupportIntent_AngryWithSomething_Persian_MustWork()
+        public async Task GetSupportIntent_AskPrice_MustWork()
+        {
+            ChatHistory chatHistory = new ChatHistory();
+
+            chatHistory.AddUserMessage("سلام");
+            chatHistory.AddAssistantMessage("سلام، چطور می‌تونم کمکتون کنم؟");
+
+            var history = chatHistory.ToHistory();
+
+            var input = "قیمت رادار آگهی چقدره؟";
+
+            var result = (
+                await GetSupportIntent.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
+                {
+                    ["input"] = input,
+                    ["history"] = history
+                }))
+            ).GetValue<string>();
+
+            Assert.Equal(SupportIntent.AskPriceOrWantToPurchase.ToString(), result ?? "");
+        }
+
+        [Fact]
+        public async Task GetSupportIntent_AngryWithSomething_MustWork()
         {
             ChatHistory chatHistory = new ChatHistory();
 
