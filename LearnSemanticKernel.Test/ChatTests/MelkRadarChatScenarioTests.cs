@@ -81,6 +81,12 @@ namespace LearnSemanticKernel.Test.ChatTests
                     throw new InvalidOperationException($"Expected User chat: {userChat.Content}");
                 input = userChat.Content;
 
+                Output.WriteLine($"""
+                    [#USER]
+                    {input}
+    
+                    """);
+
                 var agentChat = chats.Dequeue();
                 if (agentChat.Role != AuthorRole.Assistant)
                     throw new InvalidOperationException($"Expected Assistant chat: {agentChat.Content}");
@@ -92,6 +98,12 @@ namespace LearnSemanticKernel.Test.ChatTests
                         ["history"] = history.ToHistory(),
                         ["input"] = input
                     });
+
+                    Output.WriteLine($"""
+                    [#AGENT]
+                    {result}
+    
+                    """);
 
                     if (result is null)
                     {
@@ -115,8 +127,6 @@ namespace LearnSemanticKernel.Test.ChatTests
                             {agentChat.SemanticCondition}
                             """;
                         Assert.True(status == "True", message);
-
-                        Output.WriteLine(result);
                     }
 
                     if (agentChat.ContainsConditions.Any())
@@ -136,6 +146,14 @@ namespace LearnSemanticKernel.Test.ChatTests
                                 { result} 
                                 """ );
                     }
+                }
+                else
+                {
+                    Output.WriteLine($"""
+                    [#AGENT] (DEFAULT - NOT AI GENERATED)
+                    {agentChat.Content}
+    
+                    """);
                 }
 
                 
