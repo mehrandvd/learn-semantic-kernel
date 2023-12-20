@@ -28,7 +28,10 @@ namespace LearnSemanticKernel.Test.UnitTests
             foreach (var chatItem in conversation.History)
             {
                 if (chatItem.Role == AuthorRole.Assistant)
-                    Assert.NotNull(chatItem.Criteria);
+                {
+                    Assert.NotNull(chatItem.SemanticCondition);
+                    Assert.True(chatItem.ContainsConditions.Any());
+                }
             }
         }
     }

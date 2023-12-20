@@ -25,8 +25,32 @@ namespace LearnSemanticKernel.Test.TestInfra
             {
                 var parts = m.Groups["body"].Value.Split("#ANSWER_CRITERIA");
                 var content = parts[0].Trim('\n', '\r');
-                var criteria = parts.ElementAtOrDefault(1)?.Trim('\n', '\r');
+                var criteriaPart = parts.ElementAtOrDefault(1)?.Trim('\n', '\r');
 
+                var conditions = criteriaPart?.Split('\n', '\r')?.ToList();
+                
+                var semanticConditions = new StringBuilder();
+                var containsConditions = new List<string[]>();
+                
+                if (conditions is not null)
+                {
+                    
+
+                    foreach (var condition in conditions)
+                    {
+                        var match = Regex.Match(condition, "Contains: (?<text>.*)");
+                        if (match.Success)
+                        {
+                            var texts = match.Groups["text"].Value.Split(',', '،').Select(t=>t.Trim()).ToArray();
+                            containsConditions.Add(texts);
+                        }
+                        else
+                        {
+                            semanticConditions.AppendLine(condition);
+                        }
+                    }
+                }
+                
                 return new ChatItem(
                     m.Groups["role"].Value switch
                     {
@@ -35,7 +59,8 @@ namespace LearnSemanticKernel.Test.TestInfra
                         _ => throw new ArgumentOutOfRangeException()
                     },
                     content,
-                    criteria
+                    semanticConditions.ToString(),
+                    containsConditions
                 );
             }).ToList();
 
@@ -50,15 +75,17 @@ namespace LearnSemanticKernel.Test.TestInfra
 
     public class ChatItem
     {
-        public ChatItem(AuthorRole role, string content, string? criteria = null)
+        public ChatItem(AuthorRole role, string content, string? semanticCondition = null, List<string[]>? containsConditions = null)
         {
             Role = role;
             Content = content;
-            Criteria = criteria;
+            SemanticCondition = semanticCondition;
+            ContainsConditions = containsConditions ?? new List<string[]>();
         }
         public AuthorRole Role { get; set; }
         public string Content { get; set; }
-        public string? Criteria { get; set; }
+        public string? SemanticCondition { get; set; } 
+        public List<string[]> ContainsConditions { get; set; }
 
         public override string ToString()
         {

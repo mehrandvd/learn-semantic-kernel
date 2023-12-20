@@ -4,12 +4,12 @@
 
 [[[CRITERIA]]]
 {{$criteria}}
-[[[END OF INPUT]]]
+[[[END OF CRITERIA]]]
 
 ---------------------------------------------
 
 INSTRUCTION: 
-1. do not use your information, just use the information on [[[CRITERIA]]] and [[[INPUT]]] sections.
-2. for each item in the [[[CRITERIA]]] section check if the criteria item is true for the [[[INPUT]]].
-3. if all critera items are true for the [[[INPUT]]], return "True" (just the word without spaces), 
+1. do not use your information, just use the information on CRITERIA and INPUT sections. Do not validate input itself, just check conditions
+2. for each item in the CRITERIA section check if the criteria item is true for the INPUT.
+3. if all critera items are true for the INPUT, return "True" (just the word without spaces), 
 	otherwise, return False, and explain (in persian) why the criteria has not meet. 

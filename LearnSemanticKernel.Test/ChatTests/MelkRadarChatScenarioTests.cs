@@ -7,12 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LearnSemanticKernel.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Xunit.Abstractions;
+using System.ComponentModel;
 
 namespace LearnSemanticKernel.Test.ChatTests
 {
@@ -83,7 +85,7 @@ namespace LearnSemanticKernel.Test.ChatTests
                 if (agentChat.Role != AuthorRole.Assistant)
                     throw new InvalidOperationException($"Expected Assistant chat: {agentChat.Content}");
 
-                if (!string.IsNullOrWhiteSpace(agentChat.Criteria))
+                if (!string.IsNullOrWhiteSpace(agentChat.SemanticCondition) || agentChat.ContainsConditions.Any())
                 {
                     var result = await AnswerChat.InvokeAsync<string>(MyKernel, new KernelArguments()
                     {
@@ -91,24 +93,52 @@ namespace LearnSemanticKernel.Test.ChatTests
                         ["input"] = input
                     });
 
-                    var status = await TestCriteria.InvokeAsync<string>(MyKernel, new KernelArguments()
+                    if (result is null)
                     {
-                        ["input"] = result,
-                        ["criteria"] = agentChat.Criteria
-                    });
+                        Assert.Fail("result is null");
+                    }
 
-                    var message = $"""
+                    if (!string.IsNullOrWhiteSpace(agentChat.SemanticCondition))
+                    {
+                        var status = await TestCriteria.InvokeAsync<string>(MyKernel, new KernelArguments()
+                        {
+                            ["input"] = result,
+                            ["criteria"] = agentChat.SemanticCondition
+                        });
+
+                        var message = $"""
                             Failed criteria: 
                             {status}
                             Result:
                             {result}
                             Whole Criteria:
-                            {agentChat.Criteria}
+                            {agentChat.SemanticCondition}
                             """;
-                    Assert.True(status == "True", message);
+                        Assert.True(status == "True", message);
 
-                    Output.WriteLine(result);
+                        Output.WriteLine(result);
+                    }
+
+                    if (agentChat.ContainsConditions.Any())
+                    {
+                        var missed = new List<string>();
+                        agentChat.ContainsConditions.SelectMany(c=>c).ToList().ForEach(c =>
+                        {
+                            var contains = result.Contains(c, StringComparison.OrdinalIgnoreCase);
+                            if (!contains)
+                                missed.Add(c);
+                        });
+
+                        Assert.True(!missed.Any(), $"""
+                                NOT CONTAIN: Answer doesn't contain these:
+                                   - { string.Join(", ", missed)} 
+                                Answer:
+                                { result} 
+                                """ );
+                    }
                 }
+
+                
                 
 
                 
