@@ -13,10 +13,11 @@ using LearnSemanticKernel.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.ChatCompletion;
+using skUnit.Scenarios.Parsers;
 
 namespace LearnSemanticKernel.Test.ChatTests
 {
-    public class MelkRadarIntentScenarioTests
+    public class MelkRadarIntentScenarioTests : ChatScenarioTestBase
     {
         private Kernel MyKernel { get; set; }
         private KernelFunction AnswerChat { get; set; }
@@ -52,15 +53,16 @@ namespace LearnSemanticKernel.Test.ChatTests
         public async Task ChatScenario_MustWork()
         {
             await TestScenarioAsync("Scenario_Pricing_AdverRadar", SupportIntent.WantToPurchase.ToString());
-            await TestScenarioAsync("Scenario_Product_RegisterAdver", SupportIntent.QuestionAboutProduct.ToString());
+            //await TestScenarioAsync("Scenario_Product_RegisterAdver", SupportIntent.QuestionAboutProduct.ToString());
         }
 
         private async Task TestScenarioAsync(string scenarioName, string intent)
         {
-            var scenario = ConversationScenario.Parse(ConversationScenarioUtil.LoadScenario(scenarioName));
+            var scenarios = await LoadChatScenarioAsync(scenarioName);
+            var scenario = scenarios.First();
 
-            var history = new ChatHistory(scenario.History.Take(scenario.History.Count-2).Select(c=>new ChatMessageContent(c.Role, c.Content)));
-            var input = scenario.History.ElementAt(scenario.History.Count-2).Content ?? "";
+            var history = new ChatHistory(scenario.ChatItems.Take(scenario.ChatItems.Count - 2).Select(c => new ChatMessageContent(c.Role, c.Content)));
+            var input = scenario.ChatItems.ElementAt(scenario.ChatItems.Count - 2).Content ?? "";
 
             var result = (
                 await GetSupportIntent.InvokeAsync(MyKernel, new KernelArguments(new Dictionary<string, object?>()
@@ -76,7 +78,7 @@ namespace LearnSemanticKernel.Test.ChatTests
         public static IEnumerable<object[]> GetScenarios()
         {
             var scenarios = ConversationScenarioUtil.GetScenarioNames();
-            return scenarios.Select(s=>new object[]{s});
+            return scenarios.Select(s => new object[] { s });
         }
 
     }

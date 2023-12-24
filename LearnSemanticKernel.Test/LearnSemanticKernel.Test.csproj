@@ -16,7 +16,6 @@
     <None Remove="ChatTests\Scenarios\Scenario_Product_OwnerName.txt" />
     <None Remove="ChatTests\Scenarios\Scenario_Product_RegisterAdver.txt" />
     <None Remove="ChatTests\Scenarios\Scenario_Product_ShomalSources.txt" />
-    <None Remove="ChatTests\Scenarios\Test_Scenario_Parse.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,13 +37,11 @@
     <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_Khorasan.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChatTests\Scenarios\Test_Scenario_Parse.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageReference Include="skUnit" Version="0.5.0-beta" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

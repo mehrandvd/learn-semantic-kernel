@@ -24,9 +24,12 @@ namespace LearnSemanticKernel.Test.PluginTests
             var endpoint =
                 Environment.GetEnvironmentVariable("openai-endpoint", EnvironmentVariableTarget.User) ??
                 throw new Exception("No Endpoint in environment variables.");
+            var deploymentName =
+                Environment.GetEnvironmentVariable("openai-deployment-name", EnvironmentVariableTarget.User) ??
+                throw new Exception("No DeploymentName in environment variables.");
 
             var builder = Kernel.CreateBuilder();
-            builder.AddAzureOpenAIChatCompletion("gpt-35-turbo-test", endpoint, apiKey);
+            builder.AddAzureOpenAIChatCompletion(deploymentName, endpoint, apiKey);
             builder.Services.AddLogging(loggerBuilder =>
             {
                 loggerBuilder.ClearProviders();

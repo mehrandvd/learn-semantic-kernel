@@ -1,15 +1,15 @@
-﻿[#USER]
+﻿## [USER]
 قیمت اشتراک یک ماهه رادار آگهی چنده؟
 
-[#AGENT]
+## [AGENT]
 قیمت اشتراک یک ماهه ۲۱۵ هزار تومان است
-#ANSWER_CRITERIA
- - Contains: ۲۱۵, قیمت
+### CHECK Contains
+ ۲۱۵, قیمت
 
- [#USER]
+## [USER]
 قیمت اشتراک دو ماهه رادار آگهی چنده؟
 
-[#AGENT]
+## [AGENT]
 قیمت اشتراک دو ماهه ۴۲۰ هزار تومان است
-#ANSWER_CRITERIA
- - Contains: ۴۲۰, قیمت
+### CHECK Contains
+۴۲۰, قیمت
