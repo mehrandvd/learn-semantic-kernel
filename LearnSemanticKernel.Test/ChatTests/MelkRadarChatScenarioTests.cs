@@ -23,7 +23,6 @@ namespace LearnSemanticKernel.Test.ChatTests
     {
         private Kernel MyKernel { get; set; }
         private KernelFunction AnswerChat { get; set; }
-        private KernelFunction TestCriteria { get; set; }
 
         private ITestOutputHelper Output { get; set; }
 

@@ -26,7 +26,7 @@ namespace LearnSemanticKernel.Test.TestInfra
             
             var names = assembly.GetManifestResourceNames()
                     .Where(s => s.StartsWith("LearnSemanticKernel.Test.ChatTests.Scenarios.Scenario"))
-                    .Select(s=>Regex.Match(s, @"LearnSemanticKernel\.Test\.ChatTests\.Scenarios\.(?<scenario>Scenario.*)\.txt").Groups["scenario"].Value)
+                    .Select(s=>Regex.Match(s, @"LearnSemanticKernel\.Test\.(?<scenario>ChatTests\.Scenarios\.Scenario.*)\.txt").Groups["scenario"].Value)
                     .ToList();
 
             return names;

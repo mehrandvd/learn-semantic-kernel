@@ -52,7 +52,7 @@ namespace LearnSemanticKernel.Test.ChatTests
         [Fact]
         public async Task ChatScenario_MustWork()
         {
-            await TestScenarioAsync("Scenario_Pricing_AdverRadar", SupportIntent.WantToPurchase.ToString());
+            await TestScenarioAsync("ChatTests.Scenarios.Scenario_Pricing_AdverRadar", SupportIntent.WantToPurchase.ToString());
             //await TestScenarioAsync("Scenario_Product_RegisterAdver", SupportIntent.QuestionAboutProduct.ToString());
         }
 
