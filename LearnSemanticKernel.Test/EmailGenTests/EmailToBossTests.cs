@@ -47,7 +47,7 @@ namespace LearnSemanticKernel.Test.EmailGenTests
                 enough information to complete the task.
                 """));
 
-            await SemanticKernelAssert.ScenarioChatSuccessAsync(MyKernel, scenario);
+            await SemanticKernelAssert.CheckChatScenarioAsync(MyKernel, scenario);
         }
     }
 }

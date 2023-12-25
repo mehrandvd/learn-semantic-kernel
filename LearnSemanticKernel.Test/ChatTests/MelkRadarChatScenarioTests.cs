@@ -39,7 +39,7 @@ namespace LearnSemanticKernel.Test.ChatTests
         public async Task ChatScenario_MustWork(string scenarioName)
         {
             var scenarios = await LoadChatScenarioAsync(scenarioName);
-            await SemanticKernelAssert.ScenarioChatSuccessAsync(MyKernel, scenarios.First(), async chatHistory =>
+            await SemanticKernelAssert.CheckChatScenarioAsync(MyKernel, scenarios.First(), async chatHistory =>
             {
                 var history = new ChatHistory(chatHistory.Take(chatHistory.Count - 1));
                 var input = chatHistory.Last().Content;

@@ -14,7 +14,7 @@ public class ChatScenarioTestBase
 {
     protected Kernel MyKernel { get; set; }
     protected ITestOutputHelper Output { get; set; }
-
+    protected SemanticKernelAssert SemanticKernelAssert { get; set; }
     public ChatScenarioTestBase(ITestOutputHelper output)
     {
         Output = output;
@@ -29,7 +29,7 @@ public class ChatScenarioTestBase
             Environment.GetEnvironmentVariable("openai-deployment-name", EnvironmentVariableTarget.User) ??
             throw new Exception("No DeploymentName in environment variables.");
 
-        SemanticKernelAssert.Initialize(deploymentName, endpoint, apiKey, message => Output.WriteLine(message));
+        SemanticKernelAssert = new SemanticKernelAssert(deploymentName, endpoint, apiKey, message => Output.WriteLine(message));
 
         var builder = Kernel.CreateBuilder();
         builder.AddAzureOpenAIChatCompletion(deploymentName, endpoint, apiKey);
