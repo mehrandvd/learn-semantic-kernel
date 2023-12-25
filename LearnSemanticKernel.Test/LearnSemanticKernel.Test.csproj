@@ -10,35 +10,35 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ChatTests\Scenarios\Scenario_Pricing_AdverRadar.txt" />
-    <None Remove="ChatTests\Scenarios\Scenario_Product_DivarComparison.txt" />
-    <None Remove="ChatTests\Scenarios\Scenario_Product_Khorasan.txt" />
-    <None Remove="ChatTests\Scenarios\Scenario_Product_OwnerName.txt" />
-    <None Remove="ChatTests\Scenarios\Scenario_Product_RegisterAdver.txt" />
-    <None Remove="ChatTests\Scenarios\Scenario_Product_ShomalSources.txt" />
-    <None Remove="EmailGenTests\Scenarios\Scenario_WebsiteSample.txt" />
+    <None Remove="ChatTests\Scenarios\Scenario_Pricing_AdverRadar.md" />
+    <None Remove="ChatTests\Scenarios\Scenario_Product_DivarComparison.md" />
+    <None Remove="ChatTests\Scenarios\Scenario_Product_Khorasan.md" />
+    <None Remove="ChatTests\Scenarios\Scenario_Product_OwnerName.md" />
+    <None Remove="ChatTests\Scenarios\Scenario_Product_RegisterAdver.md" />
+    <None Remove="ChatTests\Scenarios\Scenario_Product_ShomalSources.md" />
+    <None Remove="EmailGenTests\Scenarios\Scenario_WebsiteSample.md" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_DivarComparison.txt">
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_DivarComparison.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Pricing_AdverRadar.txt">
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Pricing_AdverRadar.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_RegisterAdver.txt">
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_RegisterAdver.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_OwnerName.txt">
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_OwnerName.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_ShomalSources.txt">
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_ShomalSources.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_Khorasan.txt">
+    <EmbeddedResource Include="ChatTests\Scenarios\Scenario_Product_Khorasan.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmailGenTests\Scenarios\Scenario_WebsiteSample.txt">
+    <EmbeddedResource Include="EmailGenTests\Scenarios\Scenario_WebsiteSample.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
