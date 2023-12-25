@@ -14,38 +14,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.ChatCompletion;
 using skUnit.Scenarios.Parsers;
+using Xunit.Abstractions;
 
 namespace LearnSemanticKernel.Test.ChatTests
 {
     public class MelkRadarIntentScenarioTests : ChatScenarioTestBase
     {
-        private Kernel MyKernel { get; set; }
-        private KernelFunction AnswerChat { get; set; }
         private KernelFunction GetSupportIntent { get; set; }
 
-        public MelkRadarIntentScenarioTests()
+        public MelkRadarIntentScenarioTests(ITestOutputHelper output) : base(output) 
         {
             var testDir = Environment.CurrentDirectory;
 
-            var apiKey =
-                Environment.GetEnvironmentVariable("openai-api-key", EnvironmentVariableTarget.User) ??
-                throw new Exception("No ApiKey in environment variables.");
-            var endpoint =
-                Environment.GetEnvironmentVariable("openai-endpoint", EnvironmentVariableTarget.User) ??
-                throw new Exception("No Endpoint in environment variables.");
-
-            var builder = Kernel.CreateBuilder();
-            builder.AddAzureOpenAIChatCompletion("gpt-35-turbo-test", endpoint, apiKey);
-            builder.Services.AddLogging(loggerBuilder =>
-            {
-                loggerBuilder.SetMinimumLevel(LogLevel.Trace).AddDebug();
-                loggerBuilder.ClearProviders();
-                loggerBuilder.AddConsole();
-            });
-
-            builder.Plugins.AddFromPromptDirectory(Path.Combine(testDir, "Plugins", "OrchestrationPlugin"));
-            MyKernel = builder.Build();
-
+            MyKernel.ImportPluginFromPromptDirectory(Path.Combine(testDir, "Plugins", "OrchestrationPlugin"));
             GetSupportIntent = MyKernel.Plugins.GetFunction("OrchestrationPlugin", "GetSupportIntent");
         }
 
