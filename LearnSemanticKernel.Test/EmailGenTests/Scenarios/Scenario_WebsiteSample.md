@@ -1,4 +1,4 @@
-﻿# TEST WebsiteSample
+﻿# SCENARIO WebsiteSample
 
 ## [USER]
 Can you help me write an email for my boss?
@@ -10,7 +10,7 @@ provide me with more details? Specifically, I need to know:
 1. The topic or purpose of the email.
 2. Your boss's email address.
 
-### CHECK Condition
+### CHECK SemanticCondition
 It asks for topic and email
 
 ## [USER]
@@ -21,7 +21,7 @@ I want to share with her, but we did have a challenge selling the X4321 model.
 That sounds like a great topic for an email. Could you please provide me with your
 boss's email address so I can assist you further?
 
-### CHECK Condition
+### CHECK SemanticCondition
 It asks for email
 
 ## [USER]
@@ -52,7 +52,7 @@ understand.
 
 Would you like me to draft the email for you based on these steps?
 
-### CHECK Condition
+### CHECK SemanticCondition
 It talks about a plan for sending the email
 
 ## [USER]
